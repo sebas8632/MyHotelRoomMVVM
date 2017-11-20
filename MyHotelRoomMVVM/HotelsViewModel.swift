@@ -26,6 +26,7 @@ class HotelsViewModel : NSObject {
                 
                 DispatchQueue.main.async {
                     self.hotelList = hotels
+                    completion()
                 }
             }
         }
@@ -42,11 +43,11 @@ class HotelsViewModel : NSObject {
      Function to get the app's name.
      */
     func hotelNameToDisplay(for indexPath: IndexPath) -> String {
-        return self.hotelList?[indexPath.row].value(forKeyPath: "name") as? String ?? ""
+        return self.hotelList?[indexPath.row].value(forKeyPath: "listing.name") as? String ?? ""
     }
     
     func hotelPropertyTypeToDisplay(for indexPath: IndexPath) -> String {
-        let propertyType = self.hotelList?[indexPath.row].value(forKeyPath: "property_type") as? String ?? ""
+        let propertyType = self.hotelList?[indexPath.row].value(forKeyPath: "listing.property_type") as? String ?? ""
         return propertyType
     }
     
@@ -54,9 +55,9 @@ class HotelsViewModel : NSObject {
      Function to get hotel price per night.
      */
     func hotelCostToDisplay(for indexPath: IndexPath) -> String{
-        let pricing = self.hotelList?[indexPath.row].value(forKeyPath: "pricing_quote.localized_nightly_price") as? String ?? ""
+        let pricing = self.hotelList?[indexPath.row].value(forKeyPath: "pricing_quote.localized_nightly_price") as? Int ?? 0
         
-        return pricing
+        return "\(pricing)"
     }
     
     /**
@@ -66,17 +67,18 @@ class HotelsViewModel : NSObject {
         let currency = self.hotelList?[indexPath.row].value(forKeyPath: "pricing_quote.localized_currency") as? String ?? ""
         return currency
     }
+
     
     /**
-     Function to convert the imageUrl to UIImage.
+     Function to get image URL from ApiCall.
      */
-    func appImageToDisplay (for indexPath: IndexPath) -> URL {
-        let stringImage = hotelList?[indexPath.row].value(forKeyPath: "picture_url") as? String ?? ""
+    func hotelImageUrlToDisplay (for indexPath: IndexPath) -> URL {
+        let stringImage = hotelList?[indexPath.row].value(forKeyPath: "listing.picture_url") as? String ?? ""
         
         let urlImage : URL = URL(string: stringImage)!
-        
-
+ 
         return urlImage
     }
+
     
 }

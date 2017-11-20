@@ -33,6 +33,9 @@ class HotelsApiCall : NSObject {
                     if let responseJSON = try JSONSerialization.jsonObject(with: response.data!, options: .allowFragments)  as? NSDictionary {
                         
                         if let hotels = responseJSON.value(forKeyPath: "search_results") as? [NSDictionary] {
+                           
+        
+                            
                             completion(hotels, nil)
                         }
                         
